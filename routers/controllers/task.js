@@ -57,11 +57,10 @@ const createTask = (req, res) => {
   const { name, user } = req.body;
   const newTask = new taskModel({
     name,
-    user,
+    
   });
 
-  newTask
-    .save()
+  newTask.save()
     .then((result) => {
       res.status(201).json(result);
     })

@@ -39,18 +39,20 @@ const logIn = (req, res) => {
     .then(async (result) => {
       if (result) {
         if (saveEmail == result.email) {
-
-            const savePass = await bcrypt.compare(password, result.password);
+          const savePass = await bcrypt.compare(password, result.password);
           if (savePass) {
             const payload = {
               role: result.role,
             };
-            const token = await jwt.sign(payload, SECRETKEY); 
+            const token = await jwt.sign(payload, SECRETKEY);
             res.status(200).json({ result, token });
           } else {
+            console.log("pass");
             res.status(400).json("invalid email or password");
           }
         } else {
+          console.log("email");
+
           res.status(400).json("invalid email or password");
         }
       } else {
@@ -58,6 +60,7 @@ const logIn = (req, res) => {
       }
     })
     .catch((err) => {
+      console.log(err);
       res.status(400).json(err);
     });
 };
